@@ -1,35 +1,12 @@
 #!/usr/bin/env bash
-set -e
 
-echo "Hello gh-cupid-commit!"
+# Run our context fetcher and store the DNA
+REPO_DNA=$(node fetch-context.js)
 
-# Snippets to help get started:
+# Check if it failed
+if [ $? -ne 0 ]; then
+  exit 1
+fi
 
-# Determine if an executable is in the PATH
-# if ! type -p ruby >/dev/null; then
-#   echo "Ruby not found on the system" >&2
-#   exit 1
-# fi
-
-# Pass arguments through to another command
-# gh issue list "$@" -R cli/cli
-
-# Using the gh api command to retrieve and format information
-# QUERY='
-#   query($endCursor: String) {
-#     viewer {
-#       repositories(first: 100, after: $endCursor) {
-#         nodes {
-#           nameWithOwner
-#           stargazerCount
-#         }
-#       }
-#     }
-#   }
-# '
-# TEMPLATE='
-#   {{- range $repo := .data.viewer.repositories.nodes -}}
-#     {{- printf "name: %s - stargazers: %v\n" $repo.nameWithOwner $repo.stargazerCount -}}
-#   {{- end -}}
-# '
-# exec gh api graphql -f query="${QUERY}" --paginate --template="${TEMPLATE}"
+# Pass the DNA and the user's arguments to the custom Copilot agent
+gh copilot suggest -t custom --agent .github/agents/cupid.agent.md "Analyze this Repo DNA and the user request: $REPO_DNA. User Request: $@"
