@@ -24,8 +24,7 @@ Because this relies on the official GitHub Copilot ecosystem, you must have the 
 1. Clone this repository to your local machine:
 
    ```bash
-   git clone [https://github.com/dev-jash15/cupid-commit.git](https://github.com/dev-jash15/cupid-commit.git)
-   cd cupid-commit/gh-cupid-commit
+   git clone https://github.com/dev-jash15/cupid-commit
    ```
 
 2. Ensure you have Node.js installed.
@@ -46,18 +45,18 @@ node index.js <Repo-A> <Repo-B>
 Example:
 
 ```bash
-node index.js dev-jash15/codebase-cartographer SynkraAI/aios-core
+node index.js dev-jash15/codebase-cartographer bhollis/jsonview
 ```
 
 **What happens under the hood?**
 
 1. Cupid uses `gh repo view` to scrape the stats, primary languages, and descriptions of both repositories.
 
-It temporarily drops this "DNA" alongside custom instructions (`.cupid.agent.md`) into your working directory to securely bypass the Copilot CLI programmatic sandbox.
+2. It temporarily drops this "DNA" alongside custom instructions (`.cupid.agent.md`) into your working directory to securely bypass the Copilot CLI programmatic sandbox.
 
-It triggers `copilot -p`using the `@file` operator to generate the romance.
+3. It triggers `copilot -p`using the `@file` operator to generate the romance.
 
-It cleans the output and saves a beautiful `CupidMatch-<repoA>-<repoB>.md` file locally.
+4. It cleans the output and saves a beautiful `CupidMatch-<repoA>-<repoB>.md` file locally.
 
 ## 📜 Example Output
 
